@@ -28,11 +28,6 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
     - task: Maven@4
       inputs:
         azureSubscription: 'Azure subscription 1 (32258b64-d9f5-4621-a6b6-c20c60a00277)'
@@ -45,7 +40,11 @@ stages:
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
         sqMavenPluginVersionChoice: 'latest'
-        
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
