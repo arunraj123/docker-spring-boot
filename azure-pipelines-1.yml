@@ -40,6 +40,11 @@ stages:
         effectivePomSkip: false
         sonarQubeRunAnalysis: false
         sqMavenPluginVersionChoice: 'latest'
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(system.defaultworkingdirectory)'
+        Contents: '**/*.jar'
+        TargetFolder: '$(build.artifactstagingdirectory)'
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
